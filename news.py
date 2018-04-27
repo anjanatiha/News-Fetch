@@ -40,20 +40,30 @@ worldnewsurls = {
     'buzzfeed'      : 'https://www.buzzfeed.com/world.xml'
 }
 
+buisnessnewsurls = {
+	'cnnmoney' : 'http://rss.cnn.com/rss/money_topstories.rss', 
+	'cnbc' : 'http://www.cnbc.com/id/19746125/device/rss/rss.xml', 
+	'yahoofinance' : 'https://finance.yahoo.com/news/rssindex', 
+	'investing' : 'https://www.investing.com/rss/news.rss', 
+	'investing' : 'https://prod-qt-images.s3.amazonaws.com/production/c/feed.xml', 
+	'chicagobusiness' : 'http://www.chicagobusiness.com/section/news?template=rss&mime=xml', 
+	'businessinsider' : 'http://markets.businessinsider.com/rss/news'
+}
+
 technewsurls = {
-	'techmeme':'https://www.techmeme.com/feed.xml',
-	'TechCrunch':'http://feeds.feedburner.com/TechCrunch',
-	'arstechnica':'http://feeds.arstechnica.com/arstechnica/technology-lab',
-	'reddittech':'https://www.reddit.com/r/technology/.rss',
-	'computerworld':'https://www.computerworld.com/index.rss',
-	'nytimestech':'http://rss.nytimes.com/services/xml/rss/nyt/Technology.xml',
-	'cnettech':'https://www.cnet.com/rss/news/',
+	'techmeme'          :'https://www.techmeme.com/feed.xml',
+	'TechCrunch'        :'http://feeds.feedburner.com/TechCrunch',
+	'arstechnica'       :'http://feeds.arstechnica.com/arstechnica/technology-lab',
+	'reddittech'        :'https://www.reddit.com/r/technology/.rss',
+	'computerworld'     :'https://www.computerworld.com/index.rss',
+	'nytimestech'       :'http://rss.nytimes.com/services/xml/rss/nyt/Technology.xml',
+	'cnettech'          :'https://www.cnet.com/rss/news/',
 	'washingtonposttech':'http://feeds.washingtonpost.com/rss/business/technology',
 	'huffingtonposttech':'https://www.huffingtonpost.com/section/technology/feed',
-	'alleyinsider':'http://feeds.feedburner.com/typepad/alleyinsider/silicon_alley_insider',
-	'reuterstech':'http://feeds.reuters.com/reuters/technologyNews',
-	'mirrortech':'https://www.mirror.co.uk/tech/?service=rss',
-	'howtogeektech':'https://feeds.howtogeek.com/HowToGeek'
+	'alleyinsider'      :'http://feeds.feedburner.com/typepad/alleyinsider/silicon_alley_insider',
+	'reuterstech'       :'http://feeds.reuters.com/reuters/technologyNews',
+	'mirrortech'        :'https://www.mirror.co.uk/tech/?service=rss',
+	'howtogeektech'     :'https://feeds.howtogeek.com/HowToGeek'
 
 }
 
@@ -67,16 +77,20 @@ fashionnewsurls = {
 	'lookbook'        : 'http://lookbook.nu/rss',
 	'refinery29'      : 'https://www.refinery29.com/fashion/rss.xml'
 
-
 }
 
-buisnessnewsurls = {
-	'cnnmoney' : 'http://rss.cnn.com/rss/money_topstories.rss', 
-	'cnbc' : 'http://www.cnbc.com/id/19746125/device/rss/rss.xml', 
-	'yahoofinance' : 'https://finance.yahoo.com/news/rssindex', 
-	'investing' : 'https://www.investing.com/rss/news.rss', 
-	'investing' : 'https://prod-qt-images.s3.amazonaws.com/production/c/feed.xml', 
-	'chicagobusiness' : 'http://www.chicagobusiness.com/section/news?template=rss&mime=xml', 
-	'businessinsider' : 'http://markets.businessinsider.com/rss/news'
-}
-fetch_news(buisnessnewsurls)
+def get_news(news_type):
+	if news_type == 'world':
+		fetch_news(worldnewsurls)
+	elif news_type == 'buisness':
+		fetch_news(buisnessnewsurls)
+	elif news_type == 'tech':
+		fetch_news(technewsurls)
+	elif news_type == 'fashion':
+		fetch_news(fashionnewsurls)
+	else:
+		fetch_news(worldnewsurls)
+		print('news type not matched, showing world news')
+
+news_type = 'fashion'
+get_news(news_type)
