@@ -92,5 +92,33 @@ def get_news(news_type):
 		fetch_news(worldnewsurls)
 		print('news type not matched, showing world news')
 
-news_type = 'fashion'
-get_news(news_type)
+
+def find_news(search_string, news_url_type_list):
+	
+	for news_url_type in news_url_type_list:
+		for key,url in news_url_type.items():
+			try:
+				news_url=url
+				Client=urlopen(news_url)
+				xml_page=Client.read()
+				Client.close()
+
+				soup_page=soup(xml_page,"xml")
+				news_list=soup_page.findAll("item")
+				# Print news title, url and publish date
+				for news in news_list:
+				  print(news.title.text)
+				  print(news.link.text)
+				  print(news.pubDate.text)
+				  print("-"*60)
+
+			except:
+				print('could not fetch url:', url)
+
+
+news_url_type_list = [worldnewsurls, buisnessnewsurls, technewsurls, fashionnewsurls] 
+
+#news_type = 'fashion'
+#get_news(news_type)
+search_string = "aaa"
+find_news(search_string, news_url_type_list)
