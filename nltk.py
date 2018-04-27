@@ -24,7 +24,7 @@ def counter(word_dict, tokens):
 
 
 
-def token_match_count(word_dict, tokens1, tokens2):
+def match_count(word_dict, tokens1, tokens2):
 	sim_count = 0
 	for word in word_dict:
 		if (word in tokens1) and (word in tokens2):
@@ -33,25 +33,19 @@ def token_match_count(word_dict, tokens1, tokens2):
 
 
 
+def sen_tok_match_count(str1, str2):
+	word_dict = {}
 
+	tokens1 = prep_str(str1)
+	tokens2 = prep_str(str2)
+	
+	word_dict = counter(word_dict, tokens1)
+	word_dict = counter(word_dict, tokens2)
+	
+	sim_count = match_count(word_dict, tokens1, tokens2)
+	
+	return sim_count
 
-'''
-str1 = "hI how are you"
-str2 = "i am doing are fine"
-
-word_dict = {}
-
-tokens1 = prep_str(str1)
-tokens2 = prep_str(str2)
-
-word_dict = counter(word_dict, tokens1)
-word_dict = counter(word_dict, tokens2)
-
-
-
-sim_count = token_match_count(word_dict, tokens1, tokens2)
-print(sim_count)
-'''
 
 
 
