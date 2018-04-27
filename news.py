@@ -2,7 +2,7 @@ import bs4
 from bs4 import BeautifulSoup as soup
 from urllib.request import urlopen
 import feedparser
-
+from lib import nltk
 
 def fetch_news(newsurls):
 
@@ -28,16 +28,16 @@ def fetch_news(newsurls):
 
 
 worldnewsurls = {
-    'bbcnews'       : 'http://feeds.bbci.co.uk/news/world/rss.xml',
-    'cnn'           : 'http://rss.cnn.com/rss/edition_world.rss',
-    'guardian'      : 'https://www.theguardian.com/world/rss',
-    'Reuters'       : 'http://feeds.reuters.com/Reuters/worldNews',
-    'washingtonpost': 'http://feeds.washingtonpost.com/rss/world',
-    'aljajeera'     : 'https://www.aljazeera.com/xml/rss/all.xml',
-    'googlenews'    : 'https://news.google.com/news/rss/',
-    'yahoonews'     : 'http://news.yahoo.com/rss/',
-    'yahooworld'    : 'https://www.yahoo.com/news/rss/world',    
-    'buzzfeed'      : 'https://www.buzzfeed.com/world.xml'
+	'bbcnews'       : 'http://feeds.bbci.co.uk/news/world/rss.xml',
+	'cnn'           : 'http://rss.cnn.com/rss/edition_world.rss',
+	'guardian'      : 'https://www.theguardian.com/world/rss',
+	'Reuters'       : 'http://feeds.reuters.com/Reuters/worldNews',
+	'washingtonpost': 'http://feeds.washingtonpost.com/rss/world',
+	'aljajeera'     : 'https://www.aljazeera.com/xml/rss/all.xml',
+	'googlenews'    : 'https://news.google.com/news/rss/',
+	'yahoonews'     : 'http://news.yahoo.com/rss/',
+	'yahooworld'    : 'https://www.yahoo.com/news/rss/world',    
+	'buzzfeed'      : 'https://www.buzzfeed.com/world.xml'
 }
 
 buisnessnewsurls = {
@@ -105,20 +105,24 @@ def find_news(search_string, news_url_type_list):
 
 				soup_page=soup(xml_page,"xml")
 				news_list=soup_page.findAll("item")
-				# Print news title, url and publish date
-				for news in news_list:
-				  print(news.title.text)
-				  print(news.link.text)
-				  print(news.pubDate.text)
-				  print("-"*60)
 
+				for news in news_list:
+					title = news.title.text
+					tok_match_count = nltk.sen_tok_match_count(search_string, title)
+					if tok_match_count > 0:
+						print(news.title.text)
+						print(news.link.text)
+						print(news.pubDate.text)
+						print("-"*60)
 			except:
-				print('could not fetch url:', url)
+				pass
+
 
 
 news_url_type_list = [worldnewsurls, buisnessnewsurls, technewsurls, fashionnewsurls] 
 
 #news_type = 'fashion'
 #get_news(news_type)
-search_string = "aaa"
+search_string = "amazon"
+
 find_news(search_string, news_url_type_list)
